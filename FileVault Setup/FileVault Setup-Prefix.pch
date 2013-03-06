@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'FileVault Setup' target in the 'FileVault Setup' project
+//
+
+#ifdef __OBJC__
+    #import <Cocoa/Cocoa.h>
+#endif
