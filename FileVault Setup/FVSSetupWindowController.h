@@ -7,12 +7,15 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import <QuartzCore/CoreAnimation.h>
 #import <CommonCrypto/CommonCrypto.h>
 
 @interface FVSSetupWindowController : NSWindowController {
     NSString *username;
 }
 
+@property (assign) IBOutlet NSTextField *message;
+@property (assign) IBOutlet NSWindow *sheet;
 @property (weak) IBOutlet NSSecureTextField *password;
 @property (weak) IBOutlet NSSecureTextField *passwordVerify;
 

@@ -10,6 +10,10 @@
 
 @implementation FVSSetupWindowController
 
+static int numberOfShakes = 4;
+static float durationOfShake = 0.4f;
+static float vigourOfShake = 0.02f;
+
 @synthesize password = _password;
 @synthesize passwordVerify = _passwordVerify;
 
@@ -24,15 +28,29 @@
     return self;
 }
 
-//- (id)initWithWindow:(NSWindow *)window
-//{
-//    self = [super initWithWindow:window];
-//    if (self) {
-//        // Initialization code here.
-//    }
-//    
-//    return self;
-//}
+- (CAKeyframeAnimation *)shakeAnimation:(NSRect)frame
+{
+    CAKeyframeAnimation *shakeAnimation = [CAKeyframeAnimation animation];
+	
+    CGMutablePathRef shakePath = CGPathCreateMutable();
+    CGPathMoveToPoint(shakePath, NULL, NSMinX(frame), NSMinY(frame));
+	int index;
+	for (index = 0; index < numberOfShakes; ++index)
+	{
+		CGPathAddLineToPoint(shakePath,
+                             NULL,
+                             NSMinX(frame) - frame.size.width * vigourOfShake,
+                             NSMinY(frame));
+		CGPathAddLineToPoint(shakePath,
+                             NULL,
+                             NSMinX(frame) + frame.size.width * vigourOfShake,
+                             NSMinY(frame));
+	}
+    CGPathCloseSubpath(shakePath);
+    shakeAnimation.path = shakePath;
+    shakeAnimation.duration = durationOfShake;
+    return shakeAnimation;
+}
 
 - (void)windowDidLoad
 {
@@ -55,12 +73,14 @@
     if (![[_password stringValue]
           isEqualToString:[_passwordVerify stringValue]]) {
         // Notify!
+        [self shakeIt:@"Passwords Do Not Match"];
     } else {
         if ([self passwordMatch:[_password stringValue]
                     forUsername:username]) {
             [self runFileVaultSetup];
         } else {
-            // Notify
+            // Shake it!
+            [self shakeIt:@"Password Incorrect"];
         }
     }
 }
@@ -76,6 +96,16 @@
     BOOL result = NO;
     
     return result;
+}
+
+- (void)shakeIt:(NSString *)message
+{
+    [_message setStringValue:message];
+    [_sheet setAnimations:[NSDictionary
+                           dictionaryWithObject:[self
+                                                 shakeAnimation:[_sheet frame]]
+                           forKey:@"frameOrigin"]];
+	[[_sheet animator] setFrameOrigin:[_sheet frame].origin];
 }
 
 - (void)runFileVaultSetup

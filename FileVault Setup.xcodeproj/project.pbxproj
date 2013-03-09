@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		190C72F716EBC5D400C589CB /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 190C72F616EBC5D400C589CB /* QuartzCore.framework */; };
 		199337F216E6EE030029B411 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 199337F116E6EE030029B411 /* Cocoa.framework */; };
 		199337FC16E6EE030029B411 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 199337FA16E6EE030029B411 /* InfoPlist.strings */; };
 		199337FE16E6EE030029B411 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 199337FD16E6EE030029B411 /* main.m */; };
@@ -19,6 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		190C72F616EBC5D400C589CB /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		199337EE16E6EE030029B411 /* FileVault Setup.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "FileVault Setup.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		199337F116E6EE030029B411 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		199337F416E6EE030029B411 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -43,6 +45,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				190C72F716EBC5D400C589CB /* QuartzCore.framework in Frameworks */,
 				199337F216E6EE030029B411 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -53,6 +56,7 @@
 		199337E516E6EE030029B411 = {
 			isa = PBXGroup;
 			children = (
+				190C72F616EBC5D400C589CB /* QuartzCore.framework */,
 				199337F716E6EE030029B411 /* FileVault Setup */,
 				199337F016E6EE030029B411 /* Frameworks */,
 				199337EF16E6EE030029B411 /* Products */,
@@ -318,6 +322,7 @@
 				1993380D16E6EE030029B411 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
