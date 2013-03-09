@@ -7,9 +7,32 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "FVSSetupWindowController.h"
 
-@interface FVSAppDelegate : NSObject <NSApplicationDelegate>
+extern NSString * const FVSDoNotAskForSetup;
+extern NSString * const FVSForceSetup;
+
+@interface FVSAppDelegate : NSObject <NSApplicationDelegate> {
+    
+    FVSSetupWindowController *setupController;
+    
+    IBOutlet NSButton *checkbox;
+    IBOutlet NSButton *forceSetup;
+    
+}
 
 @property (assign) IBOutlet NSWindow *window;
+
++ (BOOL)doNotAskAgain;
++ (void)setDoNotAskAgain:(BOOL)askAgain;
+
++ (BOOL)forceSetup;
++ (void)setForceSetup:(BOOL)setup;
+
+- (IBAction)showSetupSheet:(id)sender;
+- (IBAction)didEndSetupSheet:(id)sender;
+
+- (IBAction)enable:(id)sender;
+- (IBAction)noEnable:(id)sender;
 
 @end
