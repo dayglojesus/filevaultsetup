@@ -17,6 +17,7 @@ extern NSString * const FVSForceSetup;
 }
 
 @property (assign) IBOutlet NSWindow *window;
+@property (assign) IBOutlet NSTextField *instruct;
 
 - (IBAction)showSetupSheet:(id)sender;
 - (IBAction)didEndSetupSheet:(id)sender;

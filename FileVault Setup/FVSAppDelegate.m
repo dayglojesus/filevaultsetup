@@ -76,6 +76,16 @@ NSString * const FVSForceSetup = @"FVSForceSetup";
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     // Insert code here to initialize your application
+    
+    if ([[NSUserDefaults standardUserDefaults] valueForKeyPath:FVSForceSetup]) {
+        [_instruct setFont:[NSFont
+                            fontWithName:@"Lucida Grande Bold" size:13.0]];
+        [_instruct setStringValue:@"Policy set by your administrator requires \
+that you activate FileVault before you can login to this workstation. Please \
+click the enable button to continue."];
+    }
+
+    
     // Setup the main window
     [_window makeKeyAndOrderFront:NSApp];
     [_window setCanBecomeVisibleWithoutLogin:YES];
