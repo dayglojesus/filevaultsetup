@@ -28,10 +28,10 @@ NSString * const FVSForceSetup = @"FVSForceSetup";
     
     if ([username length]) {
         [NSMenu setMenuBarVisible:NO];
-        if (![[NSUserDefaults standardUserDefaults]
-              valueForKeyPath:FVSForceSetup]) {
-            if ([[NSUserDefaults standardUserDefaults]
-                 valueForKeyPath:FVSDoNotAskForSetup]) {
+        if (![[[NSUserDefaults standardUserDefaults]
+              valueForKeyPath:FVSForceSetup] boolValue]) {
+            if ([[[NSUserDefaults standardUserDefaults]
+                 valueForKeyPath:FVSDoNotAskForSetup] boolValue]) {
                 exit(0);
             }
         }
@@ -76,15 +76,16 @@ NSString * const FVSForceSetup = @"FVSForceSetup";
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     // Insert code here to initialize your application
+    BOOL forcedSetup = [[[NSUserDefaults standardUserDefaults]
+                        valueForKeyPath:FVSForceSetup] boolValue];
     
-    if ([[NSUserDefaults standardUserDefaults] valueForKeyPath:FVSForceSetup]) {
+    if (forcedSetup) {
         [_instruct setFont:[NSFont
                             fontWithName:@"Lucida Grande Bold" size:13.0]];
         [_instruct setStringValue:@"Policy set by your administrator requires \
 that you activate FileVault before you can login to this workstation. Please \
 click the enable button to continue."];
     }
-
     
     // Setup the main window
     [_window makeKeyAndOrderFront:NSApp];
