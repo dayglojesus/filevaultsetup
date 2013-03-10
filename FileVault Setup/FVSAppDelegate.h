@@ -13,12 +13,7 @@ extern NSString * const FVSDoNotAskForSetup;
 extern NSString * const FVSForceSetup;
 
 @interface FVSAppDelegate : NSObject <NSApplicationDelegate> {
-    
     FVSSetupWindowController *setupController;
-    
-    IBOutlet NSButton *checkbox;
-    IBOutlet NSButton *forceSetup;
-    
 }
 
 @property (assign) IBOutlet NSWindow *window;
