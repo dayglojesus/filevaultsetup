@@ -516,7 +516,7 @@
 						<object class="NSTextField" id="756267869">
 							<reference key="NSNextResponder" ref="439893737"/>
 							<int key="NSvFlags">268</int>
-							<string key="NSFrame">{{122, 133}, {467, 50}}</string>
+							<string key="NSFrame">{{122, 132}, {467, 51}}</string>
 							<reference key="NSSuperview" ref="439893737"/>
 							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="326614673"/>
@@ -526,9 +526,7 @@
 							<object class="NSTextFieldCell" key="NSCell" id="154879092">
 								<int key="NSCellFlags">67108864</int>
 								<int key="NSCellFlags2">272629760</int>
-								<string type="base64-UTF8" key="NSContents">SWYgeW91IGRvIG5vdCB3aXNoIHRvIGJlIHByb21wdGVkIHRvIGVuYWJsZSBGaWxlVmF1bHQsIHBsYWNl
-IGEgY2hlY2ttYXJrIG5leHQgdG8gdGhlICJEbyBub3QgYXNrIG1lIGFnYWluIiBib3guIFlvdSB3aWxs
-IHN0aWxsIGJlIGFibGUgdG8gYWN0aXZhdGUgRmlsZVZhdWx0IGF0IGEgbGF0ZXIgZGF0ZS4KA</string>
+								<string key="NSContents">If you do not wish to be prompted to enable FileVault, place a checkmark next to the "Do not ask me again" box. You will still be able to activate FileVault at a later date.</string>
 								<reference key="NSSupport" ref="796791934"/>
 								<string key="NSCellIdentifier">_NS:9</string>
 								<reference key="NSControlView" ref="756267869"/>
@@ -1456,22 +1454,6 @@ IHN0aWxsIGJlIGFibGUgdG8gYWN0aXZhdGUgRmlsZVZhdWx0IGF0IGEgbGF0ZXIgZGF0ZS4KA</strin
 						<reference key="object" ref="756267869"/>
 						<array class="NSMutableArray" key="children">
 							<reference ref="154879092"/>
-							<object class="IBNSLayoutConstraint" id="257529611">
-								<reference key="firstItem" ref="756267869"/>
-								<int key="firstAttribute">8</int>
-								<int key="relation">0</int>
-								<nil key="secondItem"/>
-								<int key="secondAttribute">0</int>
-								<float key="multiplier">1</float>
-								<object class="IBLayoutConstant" key="constant">
-									<double key="value">50</double>
-								</object>
-								<float key="priority">1000</float>
-								<reference key="containingView" ref="756267869"/>
-								<int key="scoringType">3</int>
-								<float key="scoringTypeFloat">9</float>
-								<int key="contentType">1</int>
-							</object>
 						</array>
 						<reference key="parent" ref="439893737"/>
 					</object>
@@ -1564,11 +1546,6 @@ IHN0aWxsIGJlIGFibGUgdG8gYWN0aXZhdGUgRmlsZVZhdWx0IGF0IGEgbGF0ZXIgZGF0ZS4KA</strin
 						<int key="objectID">767</int>
 						<reference key="object" ref="244569001"/>
 						<reference key="parent" ref="795495063"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">768</int>
-						<reference key="object" ref="257529611"/>
-						<reference key="parent" ref="756267869"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">769</int>
@@ -1676,9 +1653,6 @@ IHN0aWxsIGJlIGFibGUgdG8gYWN0aXZhdGUgRmlsZVZhdWx0IGF0IGEgbGF0ZXIgZGF0ZS4KA</strin
 				<boolean value="NO" key="731.IBNSViewMetadataTranslatesAutoresizingMaskIntoConstraints"/>
 				<string key="731.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="732.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<array key="735.IBNSViewMetadataConstraints">
-					<reference ref="257529611"/>
-				</array>
 				<boolean value="NO" key="735.IBNSViewMetadataTranslatesAutoresizingMaskIntoConstraints"/>
 				<string key="735.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="737.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -1699,7 +1673,6 @@ IHN0aWxsIGJlIGFibGUgdG8gYWN0aXZhdGUgRmlsZVZhdWx0IGF0IGEgbGF0ZXIgZGF0ZS4KA</strin
 				<string key="764.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="765.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="767.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="768.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="769.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="770.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="771.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
