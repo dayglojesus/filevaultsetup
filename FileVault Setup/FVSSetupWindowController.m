@@ -73,14 +73,15 @@ static float vigourOfShake = 0.02f;
     if (![[_password stringValue]
           isEqualToString:[_passwordVerify stringValue]]) {
         // Notify!
-        [self shakeIt:@"Passwords Do Not Match"];
+        [self harlemShake:@"Passwords Do Not Match"];
     } else {
         if ([self passwordMatch:[_password stringValue]
                     forUsername:username]) {
-            [self runFileVaultSetup];
+            [self runFileVaultSetupForUser:username
+                              withPassword:[_password stringValue]];
         } else {
             // Shake it!
-            [self shakeIt:@"Password Incorrect"];
+            [self harlemShake:@"Password Incorrect"];
         }
     }
 }
@@ -91,14 +92,59 @@ static float vigourOfShake = 0.02f;
     [[self window] orderOut:sender];
 }
 
-- (BOOL)passwordMatch:(NSString *)password forUsername:(NSString *)username
+- (BOOL)passwordMatch:(NSString *)password forUsername:(NSString *)name
 {
-    BOOL result = NO;
+    NSDictionary *passwordData = [self passwordDataForUser:name];
+
+    NSData *entropy = [passwordData objectForKey:@"entropy"];
+    NSData *salt = [passwordData objectForKey:@"salt"];
+    NSNumber *iterations = [passwordData objectForKey:@"iterations"];
     
-    return result;
+    uint8_t key[kCCKeySizeMaxRC2] = {0};
+    int result = CCKeyDerivationPBKDF(kCCPBKDF2,
+                                      [password UTF8String],
+                                      [password lengthOfBytesUsingEncoding:
+                                       NSUTF8StringEncoding],
+                                      [salt bytes],
+                                      [salt length],
+                                      kCCPRFHmacAlgSHA512,
+                                      [iterations intValue],
+                                      key,
+                                      kCCKeySizeMaxRC2);
+    
+    if (result == kCCParamError) {
+        //you shouldn't get here with the parameters as above
+        NSLog(@"Error in key derivation: %d", result);
+        return NO;
+    }
+    
+    NSData *newKey = [NSData dataWithBytes:key length:sizeof(key)];
+        
+    if ([newKey isEqualToData:entropy]) {
+        // NSLog(@"Match!");
+        return YES;
+    }
+    
+    return NO;
 }
 
-- (void)shakeIt:(NSString *)message
+- (NSDictionary *)passwordDataForUser:(NSString *)name
+{
+    NSString *path = @"/Users/bcw/bcw.plist";
+    NSDictionary *userData = [NSDictionary dictionaryWithContentsOfFile:path];
+    NSData *passwordData = [[userData objectForKey:@"ShadowHashData"]
+                            objectAtIndex:0];
+    
+    NSDictionary *dict = [NSPropertyListSerialization
+                          propertyListFromData:passwordData
+                          mutabilityOption:NSPropertyListImmutable
+                          format:nil
+                          errorDescription:nil];
+    
+    return [dict objectForKey:@"SALTED-SHA512-PBKDF2"];
+}
+
+- (void)harlemShake:(NSString *)message
 {
     [_message setStringValue:message];
     [_sheet setAnimations:[NSDictionary
@@ -108,7 +154,8 @@ static float vigourOfShake = 0.02f;
 	[[_sheet animator] setFrameOrigin:[_sheet frame].origin];
 }
 
-- (void)runFileVaultSetup
+- (void)runFileVaultSetupForUser:(NSString *)name
+                    withPassword:(NSString *)passwordString
 {
     
 }

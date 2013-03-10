@@ -25,7 +25,11 @@
 - (IBAction)setup:(NSButton *)sender;
 - (IBAction)cancel:(NSButton *)sender;
 
-- (BOOL)passwordMatch:(NSString *)password forUsername:(NSString *)username;
-- (void)runFileVaultSetup;
+- (void)harlemShake:(NSString *)message;
+- (NSDictionary *)passwordDataForUser:(NSString *)name;
+- (BOOL)passwordMatch:(NSString *)password forUsername:(NSString *)name;
+- (void)runFileVaultSetupForUser:(NSString *)name
+                    withPassword:(NSString *)passwordString;
+
 
 @end
