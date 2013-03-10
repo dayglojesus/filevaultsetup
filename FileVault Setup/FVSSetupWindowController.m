@@ -16,6 +16,7 @@ static float vigourOfShake = 0.02f;
 
 @synthesize password = _password;
 @synthesize passwordVerify = _passwordVerify;
+@synthesize spinner = _spinner;
 
 - (id)init
 {
@@ -56,7 +57,6 @@ static float vigourOfShake = 0.02f;
 {
     [super windowDidLoad];
 }
-
 
 - (NSString *)username
 {
@@ -157,7 +157,8 @@ static float vigourOfShake = 0.02f;
 - (void)runFileVaultSetupForUser:(NSString *)name
                     withPassword:(NSString *)passwordString
 {
-    
+    [_message setStringValue:@"Running..."];
+    [_spinner startAnimation:self];
 }
 
 @end

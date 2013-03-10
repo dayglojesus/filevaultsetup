@@ -56,7 +56,6 @@
 		199337E516E6EE030029B411 = {
 			isa = PBXGroup;
 			children = (
-				190C72F616EBC5D400C589CB /* QuartzCore.framework */,
 				199337F716E6EE030029B411 /* FileVault Setup */,
 				199337F016E6EE030029B411 /* Frameworks */,
 				199337EF16E6EE030029B411 /* Products */,
@@ -74,6 +73,7 @@
 		199337F016E6EE030029B411 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				190C72F616EBC5D400C589CB /* QuartzCore.framework */,
 				199337F116E6EE030029B411 /* Cocoa.framework */,
 				199337F316E6EE030029B411 /* Other Frameworks */,
 			);

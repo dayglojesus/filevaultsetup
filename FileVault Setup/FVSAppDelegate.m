@@ -65,7 +65,6 @@ NSString * const FVSForceSetup = @"FVSForceSetup";
     if (!setupController) {
         setupController = [[FVSSetupWindowController alloc] init];
     }
-    NSLog(@"showing %@", setupController);
     [NSApp beginSheet: [setupController window]
        modalForWindow: _window
         modalDelegate: self
@@ -77,6 +76,7 @@ NSString * const FVSForceSetup = @"FVSForceSetup";
 {
     [NSApp endSheet:[setupController window]];
     [[setupController window] orderOut:sender];
+    setupController = nil;
 }
 
 - (IBAction)enable:(id)sender
@@ -88,12 +88,24 @@ NSString * const FVSForceSetup = @"FVSForceSetup";
 
 - (IBAction)noEnable:(id)sender
 {
-    
+    [_window close];
+}
+
+- (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)theApplication {
+    return YES;
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     // Insert code here to initialize your application
+    // Setup the main window
+    [_window makeKeyAndOrderFront:NSApp];
+    [_window setCanBecomeVisibleWithoutLogin:YES];
+    [_window setLevel:2147483631];
+    [_window orderFrontRegardless];
+    [_window makeKeyWindow];
+    [_window becomeMainWindow];
+    [_window center];
 }
 
 @end

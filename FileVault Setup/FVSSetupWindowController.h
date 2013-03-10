@@ -18,6 +18,7 @@
 @property (assign) IBOutlet NSWindow *sheet;
 @property (weak) IBOutlet NSSecureTextField *password;
 @property (weak) IBOutlet NSSecureTextField *passwordVerify;
+@property (weak) IBOutlet NSProgressIndicator *spinner;
 
 - (NSString *)username;
 - (void)setUsername:(NSString *)name;
