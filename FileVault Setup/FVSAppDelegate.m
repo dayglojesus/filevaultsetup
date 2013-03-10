@@ -28,36 +28,14 @@ NSString * const FVSForceSetup = @"FVSForceSetup";
     
     if ([username length]) {
         [NSMenu setMenuBarVisible:NO];
-        if (![self forceSetup]) {
-            if ([self doNotAskAgain]) {
+        if (![[NSUserDefaults standardUserDefaults]
+              valueForKeyPath:FVSForceSetup]) {
+            if ([[NSUserDefaults standardUserDefaults]
+                 valueForKeyPath:FVSDoNotAskForSetup]) {
                 exit(0);
             }
         }
     }
-}
-
-+ (BOOL)doNotAskAgain
-{
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    return [defaults boolForKey:FVSDoNotAskForSetup];
-}
-
-+ (void)setDoNotAskAgain:(BOOL)askAgain
-{
-    [[NSUserDefaults standardUserDefaults] setBool:askAgain
-                                            forKey:FVSDoNotAskForSetup];
-}
-
-+ (BOOL)forceSetup
-{
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    return [defaults boolForKey:FVSForceSetup];
-}
-
-+ (void)setForceSetup:(BOOL)setup;
-{
-    [[NSUserDefaults standardUserDefaults] setBool:setup
-                                            forKey:FVSForceSetup];
 }
 
 - (IBAction)showSetupSheet:(id)sender

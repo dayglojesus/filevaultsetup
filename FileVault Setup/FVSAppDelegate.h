@@ -23,12 +23,6 @@ extern NSString * const FVSForceSetup;
 
 @property (assign) IBOutlet NSWindow *window;
 
-+ (BOOL)doNotAskAgain;
-+ (void)setDoNotAskAgain:(BOOL)askAgain;
-
-+ (BOOL)forceSetup;
-+ (void)setForceSetup:(BOOL)setup;
-
 - (IBAction)showSetupSheet:(id)sender;
 - (IBAction)didEndSetupSheet:(id)sender;
 
