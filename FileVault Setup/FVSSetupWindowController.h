@@ -15,14 +15,17 @@
     NSString *username;
 }
 
-@property (assign) IBOutlet NSTextField *message;
+
 @property (assign) IBOutlet NSWindow *sheet;
+@property (weak) IBOutlet NSTextField *message;
 @property (weak) IBOutlet NSSecureTextField *password;
 @property (weak) IBOutlet NSSecureTextField *passwordVerify;
 @property (weak) IBOutlet NSProgressIndicator *spinner;
+@property (weak) IBOutlet NSButton *setup;
+@property (weak) IBOutlet NSButton *cancel;
 
-- (IBAction)setup:(NSButton *)sender;
-- (IBAction)cancel:(NSButton *)sender;
+- (IBAction)setupAction:(NSButton *)sender;
+- (IBAction)cancelAction:(NSButton *)sender;
 
 - (void)harlemShake:(NSString *)message;
 - (NSDictionary *)passwordDataForUser:(NSString *)name;

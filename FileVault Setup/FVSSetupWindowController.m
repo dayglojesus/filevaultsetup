@@ -17,11 +17,14 @@ static float vigourOfShake = 0.02f;
 @synthesize password = _password;
 @synthesize passwordVerify = _passwordVerify;
 @synthesize spinner = _spinner;
+@synthesize setup = _setup;
+@synthesize cancel = _cancel;
 
 - (id)init
 {
     self = [super initWithWindowNibName:@"FVSSetupWindowController"];
-    username = NSUserName();
+    
+    username = [[NSUserDefaults standardUserDefaults] objectForKey:FVSUsername];
     
     int result = seteuid(0);
     if (!result == 0) {
@@ -62,7 +65,7 @@ static float vigourOfShake = 0.02f;
     [super windowDidLoad];
 }
 
-- (IBAction)setup:(NSButton *)sender
+- (IBAction)setupAction:(NSButton *)sender
 {
     if (![[_password stringValue]
           isEqualToString:[_passwordVerify stringValue]]) {
@@ -80,7 +83,7 @@ static float vigourOfShake = 0.02f;
     }
 }
 
-- (IBAction)cancel:(NSButton *)sender
+- (IBAction)cancelAction:(NSButton *)sender
 {
     [NSApp endSheet:[self window]];
     [[self window] orderOut:sender];
@@ -128,7 +131,6 @@ static float vigourOfShake = 0.02f;
     NSString *file = [[path stringByAppendingString:name]
                       stringByAppendingString:@".plist"];
     
-    
     NSDictionary *userData = [NSDictionary dictionaryWithContentsOfFile:file];
     NSData *passwordData = [[userData objectForKey:@"ShadowHashData"]
                             objectAtIndex:0];
@@ -155,10 +157,12 @@ static float vigourOfShake = 0.02f;
 - (void)runFileVaultSetupForUser:(NSString *)name
                     withPassword:(NSString *)passwordString
 {
+    [_setup setEnabled:NO];
+    [_cancel setEnabled:NO];
     [_message setStringValue:@"Running..."];
     [_spinner startAnimation:self];
-    sleep(4);
-    [NSApp endSheet:[self window]];
+    
+//    [NSApp endSheet:[self window]];
 }
 
 -(void)dealloc
