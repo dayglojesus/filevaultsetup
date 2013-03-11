@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		190C72F716EBC5D400C589CB /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 190C72F616EBC5D400C589CB /* QuartzCore.framework */; };
+		1947B45D16ED84A0008DC1D6 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1947B45C16ED84A0008DC1D6 /* SystemConfiguration.framework */; };
 		199337F216E6EE030029B411 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 199337F116E6EE030029B411 /* Cocoa.framework */; };
 		199337FC16E6EE030029B411 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 199337FA16E6EE030029B411 /* InfoPlist.strings */; };
 		199337FE16E6EE030029B411 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 199337FD16E6EE030029B411 /* main.m */; };
@@ -21,6 +22,7 @@
 
 /* Begin PBXFileReference section */
 		190C72F616EBC5D400C589CB /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		1947B45C16ED84A0008DC1D6 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		199337EE16E6EE030029B411 /* FileVault Setup.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "FileVault Setup.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		199337F116E6EE030029B411 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		199337F416E6EE030029B411 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -45,6 +47,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1947B45D16ED84A0008DC1D6 /* SystemConfiguration.framework in Frameworks */,
 				190C72F716EBC5D400C589CB /* QuartzCore.framework in Frameworks */,
 				199337F216E6EE030029B411 /* Cocoa.framework in Frameworks */,
 			);
@@ -73,6 +76,7 @@
 		199337F016E6EE030029B411 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1947B45C16ED84A0008DC1D6 /* SystemConfiguration.framework */,
 				190C72F616EBC5D400C589CB /* QuartzCore.framework */,
 				199337F116E6EE030029B411 /* Cocoa.framework */,
 				199337F316E6EE030029B411 /* Other Frameworks */,

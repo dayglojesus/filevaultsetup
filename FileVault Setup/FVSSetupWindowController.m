@@ -22,10 +22,13 @@ static float vigourOfShake = 0.02f;
 {
     self = [super initWithWindowNibName:@"FVSSetupWindowController"];
     username = NSUserName();
-    if ([username isEqualToString:@"root"]) {
-        username = [[NSUserDefaults standardUserDefaults]
-                    objectForKey:@"user"];
+    
+    int result = seteuid(0);
+    if (!result == 0) {
+        NSLog(@"Could not set UID, error: %i", result);
+        exit(result);
     }
+    
     return self;
 }
 
@@ -160,6 +163,18 @@ static float vigourOfShake = 0.02f;
 {
     [_message setStringValue:@"Running..."];
     [_spinner startAnimation:self];
+    
+}
+
+-(void)dealloc
+{
+    int result = seteuid([[[NSUserDefaults standardUserDefaults]
+              objectForKey:@"uid"] intValue]);
+
+    if (!result == 0) {
+        NSLog(@"Could not set UID, error: %i", result);
+        exit(result);
+    }
 }
 
 @end

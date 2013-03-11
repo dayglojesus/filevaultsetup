@@ -7,6 +7,7 @@
 //
 
 #import "FVSAppDelegate.h"
+#include <SystemConfiguration/SystemConfiguration.h>
 
 NSString * const FVSDoNotAskForSetup = @"FVSDoNotAskForSetup";
 NSString * const FVSForceSetup = @"FVSForceSetup";
@@ -15,17 +16,32 @@ NSString * const FVSForceSetup = @"FVSForceSetup";
 
 + (void)initialize
 {
+    // UID Switcheroo
+    // If the app is run using a loginhook, it will have UID 0, but we want
+    // to use the NSUserDefaults for the Console user. Setting the Effective
+    // UID for the process allows us to run the app as the user.
+    uid_t uid;
+    NSString *username =
+        CFBridgingRelease(SCDynamicStoreCopyConsoleUser(NULL, &uid, NULL));
+    int result = seteuid(uid);
+    
+    if (!result == 0) {
+        NSLog(@"Could not set UID, error: %i", result);
+        exit(result);
+    }
+    
     NSMutableDictionary *defaultValues = [NSMutableDictionary dictionary];
     [defaultValues setObject:[NSNumber numberWithBool:NO]
                       forKey:FVSDoNotAskForSetup];
     [defaultValues setObject:[NSNumber numberWithBool:NO]
                       forKey:FVSForceSetup];
+    [defaultValues setObject:username
+                      forKey:@"username"];
+    [defaultValues setObject:[NSNumber numberWithInt:uid]
+                      forKey:@"uid"];
     
     [[NSUserDefaults standardUserDefaults] registerDefaults:defaultValues];
-    
-    NSString *username = [[NSUserDefaults standardUserDefaults]
-                          objectForKey:@"user"];
-    
+        
     if ([username length]) {
         [NSMenu setMenuBarVisible:NO];
         if (![[[NSUserDefaults standardUserDefaults]
