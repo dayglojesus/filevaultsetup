@@ -22,6 +22,7 @@
 
 /* Begin PBXFileReference section */
 		190C72F616EBC5D400C589CB /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		1931FFEE16EDBEA000727838 /* FVSConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FVSConstants.h; sourceTree = "<group>"; };
 		1947B45C16ED84A0008DC1D6 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		199337EE16E6EE030029B411 /* FileVault Setup.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "FileVault Setup.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		199337F116E6EE030029B411 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
@@ -97,6 +98,7 @@
 		199337F716E6EE030029B411 /* FileVault Setup */ = {
 			isa = PBXGroup;
 			children = (
+				1931FFEE16EDBEA000727838 /* FVSConstants.h */,
 				1993380316E6EE030029B411 /* FVSAppDelegate.h */,
 				1993380416E6EE030029B411 /* FVSAppDelegate.m */,
 				1993381016E6F7000029B411 /* FVSSetupWindowController.h */,

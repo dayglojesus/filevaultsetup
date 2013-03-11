@@ -11,6 +11,8 @@
 
 NSString * const FVSDoNotAskForSetup = @"FVSDoNotAskForSetup";
 NSString * const FVSForceSetup = @"FVSForceSetup";
+NSString * const FVSUsername = @"FVSUsername";
+NSString * const FVSUid = @"FVSUid";
 
 @implementation FVSAppDelegate
 
@@ -36,9 +38,9 @@ NSString * const FVSForceSetup = @"FVSForceSetup";
     [defaultValues setObject:[NSNumber numberWithBool:NO]
                       forKey:FVSForceSetup];
     [defaultValues setObject:username
-                      forKey:@"username"];
+                      forKey:FVSUsername];
     [defaultValues setObject:[NSNumber numberWithInt:uid]
-                      forKey:@"uid"];
+                      forKey:FVSUid];
     
     [[NSUserDefaults standardUserDefaults] registerDefaults:defaultValues];
         

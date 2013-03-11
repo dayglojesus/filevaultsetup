@@ -26,7 +26,7 @@ static float vigourOfShake = 0.02f;
     int result = seteuid(0);
     if (!result == 0) {
         NSLog(@"Could not set UID, error: %i", result);
-        exit(result);
+//        exit(result);
     }
     
     return self;
@@ -60,16 +60,6 @@ static float vigourOfShake = 0.02f;
 - (void)windowDidLoad
 {
     [super windowDidLoad];
-}
-
-- (NSString *)username
-{
-    return username;
-}
-
-- (void)setUsername:(NSString *)name
-{
-    username = name;
 }
 
 - (IBAction)setup:(NSButton *)sender
@@ -169,7 +159,7 @@ static float vigourOfShake = 0.02f;
 -(void)dealloc
 {
     int result = seteuid([[[NSUserDefaults standardUserDefaults]
-              objectForKey:@"uid"] intValue]);
+              objectForKey:FVSUid] intValue]);
 
     if (!result == 0) {
         NSLog(@"Could not set UID, error: %i", result);

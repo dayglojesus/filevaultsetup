@@ -9,6 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import <QuartzCore/CoreAnimation.h>
 #import <CommonCrypto/CommonCrypto.h>
+#import "FVSConstants.h"
 
 @interface FVSSetupWindowController : NSWindowController {
     NSString *username;
@@ -19,9 +20,6 @@
 @property (weak) IBOutlet NSSecureTextField *password;
 @property (weak) IBOutlet NSSecureTextField *passwordVerify;
 @property (weak) IBOutlet NSProgressIndicator *spinner;
-
-- (NSString *)username;
-- (void)setUsername:(NSString *)name;
 
 - (IBAction)setup:(NSButton *)sender;
 - (IBAction)cancel:(NSButton *)sender;

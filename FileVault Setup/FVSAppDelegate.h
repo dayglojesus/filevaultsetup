@@ -8,9 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import "FVSSetupWindowController.h"
-
-extern NSString * const FVSDoNotAskForSetup;
-extern NSString * const FVSForceSetup;
+#import "FVSConstants.h"
 
 @interface FVSAppDelegate : NSObject <NSApplicationDelegate> {
     FVSSetupWindowController *setupController;
