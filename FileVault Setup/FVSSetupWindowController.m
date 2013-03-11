@@ -124,8 +124,12 @@ static float vigourOfShake = 0.02f;
 
 - (NSDictionary *)passwordDataForUser:(NSString *)name
 {
-    NSString *path = @"/Users/bcw/bcw.plist";
-    NSDictionary *userData = [NSDictionary dictionaryWithContentsOfFile:path];
+    NSString *path = @"/private/var/db/dslocal/nodes/Default/users/";
+    NSString *file = [[path stringByAppendingString:name]
+                      stringByAppendingString:@".plist"];
+    
+    
+    NSDictionary *userData = [NSDictionary dictionaryWithContentsOfFile:file];
     NSData *passwordData = [[userData objectForKey:@"ShadowHashData"]
                             objectAtIndex:0];
     
@@ -153,7 +157,8 @@ static float vigourOfShake = 0.02f;
 {
     [_message setStringValue:@"Running..."];
     [_spinner startAnimation:self];
-    
+    sleep(4);
+    [NSApp endSheet:[self window]];
 }
 
 -(void)dealloc
