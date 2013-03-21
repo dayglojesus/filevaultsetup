@@ -85,8 +85,7 @@ static float vigourOfShake = 0.02f;
 
 - (IBAction)cancelAction:(NSButton *)sender
 {
-    [NSApp endSheet:[self window]];
-    [[self window] orderOut:sender];
+    [NSApp endSheet:[self window] returnCode:-1];
 }
 
 - (BOOL)passwordMatch:(NSString *)password forUsername:(NSString *)name
@@ -161,8 +160,12 @@ static float vigourOfShake = 0.02f;
     [_cancel setEnabled:NO];
     [_message setStringValue:@"Running..."];
     [_spinner startAnimation:self];
+
+    [[NSUserDefaults standardUserDefaults]
+        setObject:@"Error: This tool requires root access to run."
+           forKey:FVSLastErrorMessage];
     
-//    [NSApp endSheet:[self window]];
+    [NSApp endSheet:[self window] returnCode:24];
 }
 
 -(void)dealloc

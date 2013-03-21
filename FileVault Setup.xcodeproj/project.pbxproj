@@ -18,6 +18,8 @@
 		1993380F16E6F0A30029B411 /* FileVaultIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 1993380E16E6F0A30029B411 /* FileVaultIcon.icns */; };
 		1993381316E6F7000029B411 /* FVSSetupWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1993381116E6F7000029B411 /* FVSSetupWindowController.m */; };
 		1993381416E6F7000029B411 /* FVSSetupWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1993381216E6F7000029B411 /* FVSSetupWindowController.xib */; };
+		19EE18F316F6DD3F00134C7B /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19EE18F216F6DD3F00134C7B /* IOKit.framework */; };
+		19EE18F516F6DDE800134C7B /* DiskArbitration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19EE18F416F6DDE800134C7B /* DiskArbitration.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +43,8 @@
 		1993381016E6F7000029B411 /* FVSSetupWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FVSSetupWindowController.h; sourceTree = "<group>"; };
 		1993381116E6F7000029B411 /* FVSSetupWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FVSSetupWindowController.m; sourceTree = "<group>"; };
 		1993381216E6F7000029B411 /* FVSSetupWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FVSSetupWindowController.xib; sourceTree = "<group>"; };
+		19EE18F216F6DD3F00134C7B /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
+		19EE18F416F6DDE800134C7B /* DiskArbitration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DiskArbitration.framework; path = System/Library/Frameworks/DiskArbitration.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -48,6 +52,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				19EE18F516F6DDE800134C7B /* DiskArbitration.framework in Frameworks */,
+				19EE18F316F6DD3F00134C7B /* IOKit.framework in Frameworks */,
 				1947B45D16ED84A0008DC1D6 /* SystemConfiguration.framework in Frameworks */,
 				190C72F716EBC5D400C589CB /* QuartzCore.framework in Frameworks */,
 				199337F216E6EE030029B411 /* Cocoa.framework in Frameworks */,
@@ -77,6 +83,8 @@
 		199337F016E6EE030029B411 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				19EE18F416F6DDE800134C7B /* DiskArbitration.framework */,
+				19EE18F216F6DD3F00134C7B /* IOKit.framework */,
 				1947B45C16ED84A0008DC1D6 /* SystemConfiguration.framework */,
 				190C72F616EBC5D400C589CB /* QuartzCore.framework */,
 				199337F116E6EE030029B411 /* Cocoa.framework */,

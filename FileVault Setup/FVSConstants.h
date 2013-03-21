@@ -13,5 +13,6 @@ extern NSString * const FVSDoNotAskForSetup;
 extern NSString * const FVSForceSetup;
 extern NSString * const FVSUsername;
 extern NSString * const FVSUid;
+extern NSString * const FVSLastErrorMessage;
 
 #endif

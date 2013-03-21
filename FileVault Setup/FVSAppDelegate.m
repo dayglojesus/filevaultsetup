@@ -8,11 +8,15 @@
 
 #import "FVSAppDelegate.h"
 #include <SystemConfiguration/SystemConfiguration.h>
+#include <IOKit/IOKitLib.h>
+#include <DiskArbitration/DASession.h>
 
 NSString * const FVSDoNotAskForSetup = @"FVSDoNotAskForSetup";
 NSString * const FVSForceSetup = @"FVSForceSetup";
 NSString * const FVSUsername = @"FVSUsername";
 NSString * const FVSUid = @"FVSUid";
+NSString * const FVSLastErrorMessage = @"FVSLastErrorMessage";
+NSString * const FVSStatus = @"FVSStatus";
 
 @implementation FVSAppDelegate
 
@@ -41,6 +45,8 @@ NSString * const FVSUid = @"FVSUid";
                       forKey:FVSUsername];
     [defaultValues setObject:[NSNumber numberWithInt:uid]
                       forKey:FVSUid];
+    [defaultValues setObject:@""
+                      forKey:FVSLastErrorMessage];
     
     [[NSUserDefaults standardUserDefaults] registerDefaults:defaultValues];
         
@@ -56,30 +62,153 @@ NSString * const FVSUid = @"FVSUid";
     }
 }
 
+// Returns the encryption state of the root volume
+- (BOOL) rootVolumeIsEncrypted
+{
+    CFURLRef url = CFURLCreateWithFileSystemPath(kCFAllocatorDefault,
+                                                 CFSTR("/"),
+                                                 kCFURLPOSIXPathStyle,
+                                                 true);
+    
+    DASessionRef session = DASessionCreate(kCFAllocatorDefault);
+    DADiskRef disk = DADiskCreateFromVolumePath(kCFAllocatorDefault,
+                                                session,
+                                                url);
+    
+    io_service_t diskService = DADiskCopyIOMedia(disk);
+    CFTypeRef isEncrypted = IORegistryEntryCreateCFProperty(diskService,
+                                                CFSTR("CoreStorage Encrypted"),
+                                                kCFAllocatorDefault,
+                                                0);
+    
+    BOOL state = NO;
+    if (isEncrypted) {
+        CFRelease(isEncrypted);
+        state = YES;
+    }
+    
+    CFRelease(disk);
+    CFRelease(url);
+    CFRelease(session);
+    IOObjectRelease(diskService);
+    
+    return state;
+}
+
 - (IBAction)showSetupSheet:(id)sender
 {
     if (!setupController) {
         setupController = [[FVSSetupWindowController alloc] init];
     }
+    
     [NSApp beginSheet: [setupController window]
        modalForWindow: _window
         modalDelegate: self
-       didEndSelector: @selector(didEndSetupSheet:)
+       didEndSelector: @selector(didEndSetupSheet:returnCode:)
           contextInfo: NULL];
 }
 
-- (IBAction)didEndSetupSheet:(id)sender
+- (IBAction)didEndSetupSheet:(id)sender returnCode:(int)result
 {
     [NSApp endSheet:[setupController window]];
     [[setupController window] orderOut:sender];
     setupController = nil;
+    
+    // Error
+    NSString *error = [[NSUserDefaults standardUserDefaults]
+                       valueForKeyPath:FVSLastErrorMessage];
+    
+    // Basic Alert
+    NSAlert *alert = [[NSAlert alloc] init];
+    SEL theSelector = @selector(setupDidEndWithError:);
+    
+    // What kind of alert?
+    if (result == -1) {
+        // Cancelled
+        NSLog(@"User canceled operation");
+    } else if (result == 0) {
+        // Success
+        theSelector = @selector(setupDidEndWithSuccess:);
+        [alert setMessageText:@"Restart Required"];
+        [alert setInformativeText:@"Click OK to restart and complete the setup."];
+    } else {
+        // Failure
+        [alert setAlertStyle:NSCriticalAlertStyle];
+        [alert setMessageText:@"FileVault Setup Error"];
+        [alert setInformativeText:
+            [error stringByAppendingString:[NSString stringWithFormat:@" [%d]",
+                                         result]]];
+    }
+    
+    // Only alert on error or success, not on cancel
+    if (result > -1) {
+        NSLog(@"%@ [%d]", error, result);
+        [alert beginSheetModalForWindow:_window
+                          modalDelegate:self
+                         didEndSelector:theSelector
+                            contextInfo:nil];
+    }
+    
+}
+
+- (void)setupDidEndWithError:(NSAlert *)alert
+{
+    NSLog(@"Setup encountered an error.");
+}
+
+- (void)setupDidEndWithSuccess:(NSAlert *)alert
+{
+    NSLog(@"Setup complete. Restarting...");
+}
+
+- (void)setupDidEndWithAlreadyEnabled:(NSAlert *)alert
+{
+    NSLog(@"FileVault is already enabled.");
+    [_window close];
+}
+
+- (void)setupDidEndWithNotRoot:(NSAlert *)alert
+{
+    NSLog(@"You must be an administrator to enable FileVault.");
 }
 
 - (IBAction)enable:(id)sender
 {
+    // Is FileVault enabled?
+    BOOL fvstate = [self rootVolumeIsEncrypted];
+    
+    if (fvstate == YES) {
+        // ALERT
+        NSAlert *alert = [[NSAlert alloc] init];
+        [alert setMessageText:@"Already Enabled"];
+        [alert setInformativeText:@"FileVault has already been enabled."];
+        [alert beginSheetModalForWindow:_window
+                          modalDelegate:self
+                         didEndSelector:@selector(setupDidEndWithAlreadyEnabled:)
+                            contextInfo:nil];
+    }
+    
+    // Are we running as root?
+    uid_t realuid = getuid();
+
+    if (!realuid == 0) {
+        BOOL doNotAskForSetup = [[[NSUserDefaults standardUserDefaults]
+                              objectForKey:FVSDoNotAskForSetup] boolValue];
+        NSString *info = @"FileVault will be enabled at your next login.";
+        // ALERT
+        if (doNotAskForSetup == YES) {
+            info = @"Remove the checkmark to enable FileVault at next login";
+        }
+        NSAlert *alert = [[NSAlert alloc] init];
+        [alert setMessageText:@"Requires Logout"];
+        [alert setInformativeText:info];
+        [alert beginSheetModalForWindow:_window
+                          modalDelegate:self
+                         didEndSelector:@selector(setupDidEndWithNotRoot:)
+                            contextInfo:nil];
+    }
+    
     [self showSetupSheet:nil];
-//    [NSApp endSheet:[self window]];
-//    [[self window] orderOut:sender];
 }
 
 - (IBAction)noEnable:(id)sender
@@ -87,7 +216,9 @@ NSString * const FVSUid = @"FVSUid";
     [_window close];
 }
 
-- (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)theApplication {
+- (BOOL)applicationShouldTerminateAfterLastWindowClosed:
+    (NSApplication *)theApplication
+{
     return YES;
 }
 

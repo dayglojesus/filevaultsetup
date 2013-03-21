@@ -18,8 +18,10 @@
 @property (assign) IBOutlet NSTextField *instruct;
 
 - (IBAction)showSetupSheet:(id)sender;
-- (IBAction)didEndSetupSheet:(id)sender;
-
+- (IBAction)didEndSetupSheet:(id)sender returnCode:(int)result;
+- (void)setupDidEndWithError:(NSAlert *)alert;
+- (void)setupDidEndWithSuccess:(NSAlert *)alert;
+- (BOOL) rootVolumeIsEncrypted;
 - (IBAction)enable:(id)sender;
 - (IBAction)noEnable:(id)sender;
 
