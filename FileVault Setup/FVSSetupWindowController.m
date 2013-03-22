@@ -67,13 +67,18 @@ static float vigourOfShake = 0.02f;
 
 - (IBAction)setupAction:(NSButton *)sender
 {
+    NSDictionary *passwordData = [self passwordDataForUser:username];
+    
+    assert(passwordData);
+    
     if (![[_password stringValue]
           isEqualToString:[_passwordVerify stringValue]]) {
         // Notify!
         [self harlemShake:@"Passwords Do Not Match"];
     } else {
         if ([self passwordMatch:[_password stringValue]
-                    forUsername:username]) {
+                    forUsername:username
+              withPasswordDdata:passwordData]) {
             [self runFileVaultSetupForUser:username
                               withPassword:[_password stringValue]];
         } else {
@@ -88,10 +93,10 @@ static float vigourOfShake = 0.02f;
     [NSApp endSheet:[self window] returnCode:-1];
 }
 
-- (BOOL)passwordMatch:(NSString *)password forUsername:(NSString *)name
+- (BOOL)passwordMatch:(NSString *)password
+          forUsername:(NSString *)name
+    withPasswordDdata:(NSDictionary *)passwordData
 {
-    NSDictionary *passwordData = [self passwordDataForUser:name];
-
     NSData *entropy = [passwordData objectForKey:@"entropy"];
     NSData *salt = [passwordData objectForKey:@"salt"];
     NSNumber *iterations = [passwordData objectForKey:@"iterations"];
@@ -130,17 +135,29 @@ static float vigourOfShake = 0.02f;
     NSString *file = [[path stringByAppendingString:name]
                       stringByAppendingString:@".plist"];
     
+    if (![[NSFileManager defaultManager] fileExistsAtPath:file]) {
+        NSLog(@"No such file: %@", file);
+        return nil;
+    }
+    
     NSDictionary *userData = [NSDictionary dictionaryWithContentsOfFile:file];
-    NSData *passwordData = [[userData objectForKey:@"ShadowHashData"]
-                            objectAtIndex:0];
-    
-    NSDictionary *dict = [NSPropertyListSerialization
-                          propertyListFromData:passwordData
-                          mutabilityOption:NSPropertyListImmutable
-                          format:nil
-                          errorDescription:nil];
-    
-    return [dict objectForKey:@"SALTED-SHA512-PBKDF2"];
+    if (userData) {
+        NSData *passwordData = [[userData objectForKey:@"ShadowHashData"]
+                                objectAtIndex:0];
+        
+        assert(passwordData);
+        
+        NSDictionary *dict = [NSPropertyListSerialization
+                              propertyListFromData:passwordData
+                              mutabilityOption:NSPropertyListImmutable
+                              format:nil
+                              errorDescription:nil];
+        
+        return [dict objectForKey:@"SALTED-SHA512-PBKDF2"];
+
+    }
+
+    return nil;
 }
 
 - (void)harlemShake:(NSString *)message

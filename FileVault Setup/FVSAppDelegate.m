@@ -22,13 +22,15 @@ NSString * const FVSStatus = @"FVSStatus";
 
 + (void)initialize
 {
+    // Grab the username and the uid of the Console user
+    uid_t uid;
+    NSString *username =
+        CFBridgingRelease(SCDynamicStoreCopyConsoleUser(NULL, &uid, NULL));
+    
     // UID Switcheroo
     // If the app is run using a loginhook, it will have UID 0, but we want
     // to use the NSUserDefaults for the Console user. Setting the Effective
     // UID for the process allows us to run the app as the user.
-    uid_t uid;
-    NSString *username =
-        CFBridgingRelease(SCDynamicStoreCopyConsoleUser(NULL, &uid, NULL));
     int result = seteuid(uid);
     
     if (!result == 0) {
@@ -36,6 +38,7 @@ NSString * const FVSStatus = @"FVSStatus";
         exit(result);
     }
     
+    // Register defaults
     NSMutableDictionary *defaultValues = [NSMutableDictionary dictionary];
     [defaultValues setObject:[NSNumber numberWithBool:NO]
                       forKey:FVSDoNotAskForSetup];
@@ -49,7 +52,11 @@ NSString * const FVSStatus = @"FVSStatus";
                       forKey:FVSLastErrorMessage];
     
     [[NSUserDefaults standardUserDefaults] registerDefaults:defaultValues];
-        
+    
+    // Establish the startup mode
+    // Are we root? If so, hide the menu bar.
+    // Is this a forced setup? If so, register the default.
+    // If the user has opted out, simply exit.
     if ([username length]) {
         [NSMenu setMenuBarVisible:NO];
         if (![[[NSUserDefaults standardUserDefaults]
@@ -172,6 +179,12 @@ NSString * const FVSStatus = @"FVSStatus";
     NSLog(@"You must be an administrator to enable FileVault.");
 }
 
+- (void)setupDidEndWithNetworkUser:(NSAlert *)alert
+{
+    NSLog(@"Network cannot enable FileVault on their first login.");
+    [_window close];
+}
+
 - (IBAction)enable:(id)sender
 {
     // Is FileVault enabled?
@@ -208,6 +221,33 @@ NSString * const FVSStatus = @"FVSStatus";
                             contextInfo:nil];
     }
     
+    // Ensure a cached account for the Console user is available
+    // Network accounts present some interesting edge cases...
+    NSString *username = [[NSUserDefaults standardUserDefaults]
+                            objectForKey:FVSUsername];
+    NSString *path = @"/private/var/db/dslocal/nodes/Default/users/";
+    NSString *file = [[path stringByAppendingString:username]
+                      stringByAppendingString:@".plist"];
+    
+    // UID Switcheroo
+    seteuid(0);
+        
+    if (![[NSFileManager defaultManager] fileExistsAtPath:file]) {
+        NSLog(@"No such file: %@", file);
+        NSAlert *alert = [[NSAlert alloc] init];
+        [alert setMessageText:@"Network Account"];
+        [alert setInformativeText:@"Network cannot enable FileVault on their first login. Try again at next login."];
+        [alert beginSheetModalForWindow:_window
+                          modalDelegate:self
+                         didEndSelector:@selector(setupDidEndWithNetworkUser:)
+                            contextInfo:nil];
+    }
+    
+    // UID Switcheroo
+    seteuid([[[NSUserDefaults standardUserDefaults]
+              objectForKey:FVSUid] intValue]);
+
+    // If all these tests pass...
     [self showSetupSheet:nil];
 }
 
