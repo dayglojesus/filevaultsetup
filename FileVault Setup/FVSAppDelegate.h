@@ -19,8 +19,14 @@
 
 - (IBAction)showSetupSheet:(id)sender;
 - (IBAction)didEndSetupSheet:(id)sender returnCode:(int)result;
+
 - (void)setupDidEndWithError:(NSAlert *)alert;
 - (void)setupDidEndWithSuccess:(NSAlert *)alert;
+- (void)setupDidEndWithAlreadyEnabled:(NSAlert *)alert;
+- (void)setupDidEndWithOptedOut:(NSAlert *)alert;
+- (void)setupDidEndWithNotRoot:(NSAlert *)alert;
+- (void)setupDidEndWithNetworkUser:(NSAlert *)alert;
+
 - (BOOL) rootVolumeIsEncrypted;
 - (IBAction)enable:(id)sender;
 - (IBAction)noEnable:(id)sender;
