@@ -166,6 +166,8 @@ NSString * const FVSStatus = @"FVSStatus";
 - (void)setupDidEndWithSuccess:(NSAlert *)alert
 {
     NSLog(@"Setup complete. Restarting...");
+    [_window orderOut:self];
+    [self restart];
 }
 
 - (void)setupDidEndWithAlreadyEnabled:(NSAlert *)alert
@@ -183,6 +185,24 @@ NSString * const FVSStatus = @"FVSStatus";
 {
     NSLog(@"Network cannot enable FileVault on their first login.");
     [_window close];
+}
+
+- (void)restart
+{
+    [NSThread sleepForTimeInterval:10];
+    // UID Switcheroo
+    seteuid(0);
+    
+    // Task Setup
+    NSTask *theTask = [[NSTask alloc] init];
+    [theTask setLaunchPath:@"/sbin/reboot"];
+    
+    // Task Run
+    [theTask launch];
+    
+    // UID Switcheroo
+    seteuid([[[NSUserDefaults standardUserDefaults]
+              objectForKey:FVSUid] intValue]);
 }
 
 - (IBAction)enable:(id)sender

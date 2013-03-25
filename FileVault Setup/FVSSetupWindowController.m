@@ -182,10 +182,10 @@ static float vigourOfShake = 0.02f;
         setObject:@"Error: This tool requires root access to run."
            forKey:FVSLastErrorMessage];
     
-    [NSApp endSheet:[self window] returnCode:24];
+    [NSApp endSheet:[self window] returnCode:0];
 }
 
--(void)dealloc
+- (void)dealloc
 {
     int result = seteuid([[[NSUserDefaults standardUserDefaults]
               objectForKey:FVSUid] intValue]);
