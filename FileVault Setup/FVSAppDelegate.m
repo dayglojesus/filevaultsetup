@@ -314,12 +314,18 @@ click the enable button to continue."];
     }
     
     // Setup the main window
-    [_window makeKeyAndOrderFront:NSApp];
-    [_window setCanBecomeVisibleWithoutLogin:YES];
-    [_window setLevel:2147483631];
-    [_window orderFrontRegardless];
-    [_window makeKeyWindow];
-    [_window becomeMainWindow];
+    // Are we running as root?
+    uid_t realuid = getuid();
+    
+    if (realuid == 0) {
+        
+        [_window makeKeyAndOrderFront:NSApp];
+        [_window setCanBecomeVisibleWithoutLogin:YES];
+        [_window setLevel:2147483631];
+        [_window orderFrontRegardless];
+        [_window makeKeyWindow];
+        [_window becomeMainWindow];
+    }
     [_window center];
 }
 
