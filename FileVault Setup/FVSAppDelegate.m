@@ -55,9 +55,10 @@ NSString * const FVSStatus = @"FVSStatus";
     
     // Establish the startup mode
     // Are we root? If so, hide the menu bar.
-    // Is this a forced setup? If so, register the default.
-    // If the user has opted out, simply exit.
-    if ([username length]) {
+    // Is this a forced setup? If not, respect that the user has
+    // opted out, and simply exit.
+    uid_t realuid = getuid();
+    if (realuid == 0) {
         [NSMenu setMenuBarVisible:NO];
         if (![[[NSUserDefaults standardUserDefaults]
               valueForKeyPath:FVSForceSetup] boolValue]) {
@@ -70,7 +71,7 @@ NSString * const FVSStatus = @"FVSStatus";
 }
 
 // Returns the encryption state of the root volume
-- (BOOL) rootVolumeIsEncrypted
+- (BOOL)rootVolumeIsEncrypted
 {
     CFURLRef url = CFURLCreateWithFileSystemPath(kCFAllocatorDefault,
                                                  CFSTR("/"),
@@ -191,7 +192,11 @@ NSString * const FVSStatus = @"FVSStatus";
 {
     [NSThread sleepForTimeInterval:10];
     // UID Switcheroo
-    seteuid(0);
+    int switcheroo = seteuid(0);
+    
+    if (!switcheroo == 0) {
+        NSLog(@"Could not set UID, error: %i", switcheroo);
+    }
     
     // Task Setup
     NSTask *theTask = [[NSTask alloc] init];
@@ -250,8 +255,12 @@ NSString * const FVSStatus = @"FVSStatus";
                       stringByAppendingString:@".plist"];
     
     // UID Switcheroo
-    seteuid(0);
-        
+    int switcheroo = seteuid(0);
+    
+    if (!switcheroo == 0) {
+        NSLog(@"Could not set UID, error: %i", switcheroo);
+    }
+    
     if (![[NSFileManager defaultManager] fileExistsAtPath:file]) {
         NSLog(@"No such file: %@", file);
         NSAlert *alert = [[NSAlert alloc] init];
