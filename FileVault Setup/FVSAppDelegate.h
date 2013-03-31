@@ -17,7 +17,8 @@
 @property (assign) IBOutlet NSWindow *window;
 @property (assign) IBOutlet NSTextField *instruct;
 
-- (BOOL)rootVolumeIsEncrypted;
++ (BOOL)rootVolumeIsEncrypted;
+
 - (IBAction)showSetupSheet:(id)sender;
 - (IBAction)didEndSetupSheet:(id)sender returnCode:(int)result;
 

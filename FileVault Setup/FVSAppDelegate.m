@@ -54,11 +54,15 @@ NSString * const FVSStatus = @"FVSStatus";
     [[NSUserDefaults standardUserDefaults] registerDefaults:defaultValues];
     
     // Establish the startup mode
-    // Are we root? If so, hide the menu bar.
+    // Are we root? If so, exit if the root vol already encrypted.
+    // Also, hide the menu bar.
     // Is this a forced setup? If not, respect that the user has
     // opted out, and simply exit.
     uid_t realuid = getuid();
     if (realuid == 0) {
+        if ([FVSAppDelegate rootVolumeIsEncrypted]) {
+            exit(0);
+        }
         [NSMenu setMenuBarVisible:NO];
         if (![[[NSUserDefaults standardUserDefaults]
               valueForKeyPath:FVSForceSetup] boolValue]) {
@@ -71,7 +75,7 @@ NSString * const FVSStatus = @"FVSStatus";
 }
 
 // Returns the encryption state of the root volume
-- (BOOL)rootVolumeIsEncrypted
++ (BOOL)rootVolumeIsEncrypted
 {
     CFURLRef url = CFURLCreateWithFileSystemPath(kCFAllocatorDefault,
                                                  CFSTR("/"),
@@ -85,9 +89,9 @@ NSString * const FVSStatus = @"FVSStatus";
     
     io_service_t diskService = DADiskCopyIOMedia(disk);
     CFTypeRef isEncrypted = IORegistryEntryCreateCFProperty(diskService,
-                                                CFSTR("CoreStorage Encrypted"),
-                                                kCFAllocatorDefault,
-                                                0);
+                                                            CFSTR("CoreStorage Encrypted"),
+                                                            kCFAllocatorDefault,
+                                                            0);
     
     BOOL state = NO;
     if (isEncrypted) {
@@ -214,7 +218,7 @@ NSString * const FVSStatus = @"FVSStatus";
 - (IBAction)enable:(id)sender
 {
     // Is FileVault enabled?
-    BOOL fvstate = [self rootVolumeIsEncrypted];
+    BOOL fvstate = [FVSAppDelegate rootVolumeIsEncrypted];
     
     if (fvstate == YES) {
         // ALERT
