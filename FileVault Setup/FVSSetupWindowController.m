@@ -67,18 +67,12 @@ static float vigourOfShake = 0.02f;
 
 - (IBAction)setupAction:(NSButton *)sender
 {
-    NSDictionary *passwordData = [self passwordDataForUser:username];
-    
-    assert(passwordData);
-    
     if (![[_password stringValue]
           isEqualToString:[_passwordVerify stringValue]]) {
         // Notify!
         [self harlemShake:@"Passwords Do Not Match"];
     } else {
-        if ([self passwordMatch:[_password stringValue]
-                    forUsername:username
-              withPasswordDdata:passwordData]) {
+        if ([self passwordMatch:[_password stringValue] forUsername:username]) {
             [self runFileVaultSetupForUser:username
                               withPassword:[_password stringValue]];
         } else {
@@ -93,71 +87,32 @@ static float vigourOfShake = 0.02f;
     [NSApp endSheet:[self window] returnCode:-1];
 }
 
-- (BOOL)passwordMatch:(NSString *)password
-          forUsername:(NSString *)name
-    withPasswordDdata:(NSDictionary *)passwordData
+- (BOOL)passwordMatch:(NSString *)password forUsername:(NSString *)name
 {
-    NSData *entropy = [passwordData objectForKey:@"entropy"];
-    NSData *salt = [passwordData objectForKey:@"salt"];
-    NSNumber *iterations = [passwordData objectForKey:@"iterations"];
+    BOOL match = NO;
+	ODSessionRef session = NULL;
+	ODNodeRef node = NULL;
+	ODRecordRef	rec = NULL;
     
-    uint8_t key[kCCKeySizeMaxRC2] = {0};
-    int result = CCKeyDerivationPBKDF(kCCPBKDF2,
-                                      [password UTF8String],
-                                      [password lengthOfBytesUsingEncoding:
-                                       NSUTF8StringEncoding],
-                                      [salt bytes],
-                                      [salt length],
-                                      kCCPRFHmacAlgSHA512,
-                                      [iterations intValue],
-                                      key,
-                                      kCCKeySizeMaxRC2);
-    
-    if (result == kCCParamError) {
-        //you shouldn't get here with the parameters as above
-        NSLog(@"Error in key derivation: %d", result);
-        return NO;
+    session = ODSessionCreate(NULL, NULL, NULL);
+    node = ODNodeCreateWithNodeType(NULL,
+                                    session,
+                                    kODNodeTypeAuthentication,
+                                    NULL);
+    if (node) {
+        rec = ODNodeCopyRecord(node,
+                               kODRecordTypeUsers,
+                               (__bridge CFStringRef)(name),
+                               NULL,
+                               NULL);
+    }
+    if (rec) {
+        match = ODRecordVerifyPassword(rec,
+                                       (__bridge CFStringRef)(password),
+                                       NULL);
     }
     
-    NSData *newKey = [NSData dataWithBytes:key length:sizeof(key)];
-        
-    if ([newKey isEqualToData:entropy]) {
-        // NSLog(@"Match!");
-        return YES;
-    }
-    
-    return NO;
-}
-
-- (NSDictionary *)passwordDataForUser:(NSString *)name
-{
-    NSString *path = @"/private/var/db/dslocal/nodes/Default/users/";
-    NSString *file = [[path stringByAppendingString:name]
-                      stringByAppendingString:@".plist"];
-    
-    if (![[NSFileManager defaultManager] fileExistsAtPath:file]) {
-        NSLog(@"No such file: %@", file);
-        return nil;
-    }
-    
-    NSDictionary *userData = [NSDictionary dictionaryWithContentsOfFile:file];
-    if (userData) {
-        NSData *passwordData = [[userData objectForKey:@"ShadowHashData"]
-                                objectAtIndex:0];
-        
-        assert(passwordData);
-        
-        NSDictionary *dict = [NSPropertyListSerialization
-                              propertyListFromData:passwordData
-                              mutabilityOption:NSPropertyListImmutable
-                              format:nil
-                              errorDescription:nil];
-        
-        return [dict objectForKey:@"SALTED-SHA512-PBKDF2"];
-
-    }
-
-    return nil;
+    return match;
 }
 
 - (void)harlemShake:(NSString *)message

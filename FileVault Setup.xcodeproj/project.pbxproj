@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		190C608E1708188300EC3927 /* OpenDirectory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 190C608D1708188300EC3927 /* OpenDirectory.framework */; };
 		190C72F716EBC5D400C589CB /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 190C72F616EBC5D400C589CB /* QuartzCore.framework */; };
 		1947B45D16ED84A0008DC1D6 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1947B45C16ED84A0008DC1D6 /* SystemConfiguration.framework */; };
 		199337F216E6EE030029B411 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 199337F116E6EE030029B411 /* Cocoa.framework */; };
@@ -23,6 +24,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		190C608D1708188300EC3927 /* OpenDirectory.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenDirectory.framework; path = System/Library/Frameworks/OpenDirectory.framework; sourceTree = SDKROOT; };
 		190C72F616EBC5D400C589CB /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		1931FFEE16EDBEA000727838 /* FVSConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FVSConstants.h; sourceTree = "<group>"; };
 		1947B45C16ED84A0008DC1D6 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -52,6 +54,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				190C608E1708188300EC3927 /* OpenDirectory.framework in Frameworks */,
 				19EE18F516F6DDE800134C7B /* DiskArbitration.framework in Frameworks */,
 				19EE18F316F6DD3F00134C7B /* IOKit.framework in Frameworks */,
 				1947B45D16ED84A0008DC1D6 /* SystemConfiguration.framework in Frameworks */,
@@ -83,6 +86,7 @@
 		199337F016E6EE030029B411 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				190C608D1708188300EC3927 /* OpenDirectory.framework */,
 				19EE18F416F6DDE800134C7B /* DiskArbitration.framework */,
 				19EE18F216F6DD3F00134C7B /* IOKit.framework */,
 				1947B45C16ED84A0008DC1D6 /* SystemConfiguration.framework */,

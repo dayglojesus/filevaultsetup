@@ -9,12 +9,12 @@
 #import <Cocoa/Cocoa.h>
 #import <QuartzCore/CoreAnimation.h>
 #import <CommonCrypto/CommonCrypto.h>
+#import <OpenDirectory/OpenDirectory.h>
 #import "FVSConstants.h"
 
 @interface FVSSetupWindowController : NSWindowController {
     NSString *username;
 }
-
 
 @property (assign) IBOutlet NSWindow *sheet;
 @property (weak) IBOutlet NSTextField *message;
@@ -28,10 +28,7 @@
 - (IBAction)cancelAction:(NSButton *)sender;
 
 - (void)harlemShake:(NSString *)message;
-- (NSDictionary *)passwordDataForUser:(NSString *)name;
-- (BOOL)passwordMatch:(NSString *)password
-          forUsername:(NSString *)name
-    withPasswordDdata:(NSDictionary *)passwordData;
+- (BOOL)passwordMatch:(NSString *)password forUsername:(NSString *)name;
 - (void)runFileVaultSetupForUser:(NSString *)name
                     withPassword:(NSString *)passwordString;
 
