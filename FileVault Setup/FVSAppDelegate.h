@@ -26,7 +26,6 @@
 - (void)setupDidEndWithAlreadyEnabled:(NSAlert *)alert;
 - (void)setupDidEndWithOptedOut:(NSAlert *)alert;
 - (void)setupDidEndWithNotRoot:(NSAlert *)alert;
-- (void)setupDidEndWithNetworkUser:(NSAlert *)alert;
 
 - (void)restart;
 - (IBAction)enable:(id)sender;

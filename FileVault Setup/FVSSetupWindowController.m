@@ -194,7 +194,7 @@ static float vigourOfShake = 0.02f;
     
     // Close
     int result = [theTask terminationStatus];
-    
+
     [[NSUserDefaults standardUserDefaults]
         setObject:error
            forKey:FVSLastErrorMessage];

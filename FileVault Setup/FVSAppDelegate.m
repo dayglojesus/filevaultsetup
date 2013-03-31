@@ -188,12 +188,6 @@ NSString * const FVSStatus = @"FVSStatus";
     [_window close];
 }
 
-- (void)setupDidEndWithNetworkUser:(NSAlert *)alert
-{
-    NSLog(@"Network cannot enable FileVault on their first login.");
-    [_window close];
-}
-
 - (void)restart
 {
     [NSThread sleepForTimeInterval:10];
@@ -214,6 +208,7 @@ NSString * const FVSStatus = @"FVSStatus";
     // UID Switcheroo
     seteuid([[[NSUserDefaults standardUserDefaults]
               objectForKey:FVSUid] intValue]);
+    [_window close];
 }
 
 - (IBAction)enable:(id)sender
@@ -253,38 +248,8 @@ NSString * const FVSStatus = @"FVSStatus";
                          didEndSelector:theSelector
                             contextInfo:nil];
     }
-    
-    // Ensure a cached account for the Console user is available
-    // Network accounts present some interesting edge cases...
-    NSString *username = [[NSUserDefaults standardUserDefaults]
-                            objectForKey:FVSUsername];
-    NSString *path = @"/private/var/db/dslocal/nodes/Default/users/";
-    NSString *file = [[path stringByAppendingString:username]
-                      stringByAppendingString:@".plist"];
-    
-    // UID Switcheroo
-    int switcheroo = seteuid(0);
-    
-    if (!switcheroo == 0) {
-        NSLog(@"Could not set UID, error: %i", switcheroo);
-    }
-    
-    if (![[NSFileManager defaultManager] fileExistsAtPath:file]) {
-        NSLog(@"No such file: %@", file);
-        NSAlert *alert = [[NSAlert alloc] init];
-        [alert setMessageText:@"Network Account"];
-        [alert setInformativeText:@"Network cannot enable FileVault on their first login. Try again at next login."];
-        [alert beginSheetModalForWindow:_window
-                          modalDelegate:self
-                         didEndSelector:@selector(setupDidEndWithNetworkUser:)
-                            contextInfo:nil];
-    }
-    
-    // UID Switcheroo
-    seteuid([[[NSUserDefaults standardUserDefaults]
-              objectForKey:FVSUid] intValue]);
 
-    // If all these tests pass...
+    // If both these tests pass...
     [self showSetupSheet:nil];
 }
 
