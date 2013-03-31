@@ -1,0 +1,8 @@
+xcuserdata
+FileVault Setup.xcodeproj/project.xcworkspace
+*~
+.DS_Store
+*.pmdoc
+*.mpkg
+*.pkg
+*.dmg
