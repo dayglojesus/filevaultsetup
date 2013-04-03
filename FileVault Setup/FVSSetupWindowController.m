@@ -136,7 +136,7 @@ static float vigourOfShake = 0.02f;
 
     // Setup Task args
     NSMutableArray *task_args = [NSMutableArray arrayWithObjects:@"enable",
-                                 @"-inputplist", nil];
+                                 @"-outputplist", @"-inputplist", nil];
     if ([[NSFileManager defaultManager]
          fileExistsAtPath:@"/Library/Keychains/FileVaultMaster.keychain"]) {
         [task_args insertObject:@"-keychain" atIndex:1];
