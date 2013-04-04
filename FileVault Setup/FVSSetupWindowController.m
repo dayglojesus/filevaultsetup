@@ -67,18 +67,12 @@ static float vigourOfShake = 0.02f;
 
 - (IBAction)setupAction:(NSButton *)sender
 {
-    if (![[_password stringValue]
-          isEqualToString:[_passwordVerify stringValue]]) {
-        // Notify!
-        [self harlemShake:@"Passwords Do Not Match"];
+    if ([self passwordMatch:[_password stringValue] forUsername:username]) {
+        [self runFileVaultSetupForUser:username
+                          withPassword:[_password stringValue]];
     } else {
-        if ([self passwordMatch:[_password stringValue] forUsername:username]) {
-            [self runFileVaultSetupForUser:username
-                              withPassword:[_password stringValue]];
-        } else {
-            // Shake it!
-            [self harlemShake:@"Password Incorrect"];
-        }
+        // Shake it!
+        [self harlemShake:@"Password Incorrect"];
     }
 }
 
