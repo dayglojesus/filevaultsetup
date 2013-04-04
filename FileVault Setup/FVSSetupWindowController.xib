@@ -132,7 +132,7 @@
 											<string key="NSFrame">{{97, 14}, {299, 22}}</string>
 											<reference key="NSSuperview" ref="178959078"/>
 											<reference key="NSWindow"/>
-											<reference key="NSNextKeyView" ref="1053249764"/>
+											<reference key="NSNextKeyView" ref="631749318"/>
 											<string key="NSReuseIdentifierKey">_NS:9</string>
 											<bool key="NSEnabled">YES</bool>
 											<object class="NSSecureTextFieldCell" key="NSCell" id="636990907">
@@ -238,7 +238,7 @@
 							<string key="NSFrame">{{46, 37}, {16, 16}}</string>
 							<reference key="NSSuperview" ref="1006"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView" ref="631749318"/>
+							<reference key="NSNextKeyView" ref="523270981"/>
 							<string key="NSReuseIdentifierKey">_NS:3891</string>
 							<int key="NSpiFlags">28938</int>
 							<double key="NSMaxValue">100</double>
@@ -257,7 +257,7 @@
 								<int key="NSCellFlags2">4195328</int>
 								<string key="NSContents"/>
 								<reference key="NSSupport" ref="26"/>
-								<string key="NSPlaceholderString">&lt;message&gt;</string>
+								<string key="NSPlaceholderString"/>
 								<string key="NSCellIdentifier">_NS:1535</string>
 								<reference key="NSControlView" ref="631749318"/>
 								<reference key="NSBackgroundColor" ref="889953700"/>
@@ -321,7 +321,7 @@
 							<string key="NSFrame">{{179, 120}, {305, 17}}</string>
 							<reference key="NSSuperview" ref="1006"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView" ref="523270981"/>
+							<reference key="NSNextKeyView" ref="1053249764"/>
 							<string key="NSReuseIdentifierKey">_NS:1535</string>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="884203319">
@@ -721,7 +721,6 @@
 						<string key="cancel">NSButton</string>
 						<string key="message">NSTextField</string>
 						<string key="password">NSSecureTextField</string>
-						<string key="passwordVerify">NSSecureTextField</string>
 						<string key="setup">NSButton</string>
 						<string key="sheet">NSWindow</string>
 						<string key="spinner">NSProgressIndicator</string>
@@ -737,10 +736,6 @@
 						</object>
 						<object class="IBToOneOutletInfo" key="password">
 							<string key="name">password</string>
-							<string key="candidateClassName">NSSecureTextField</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="passwordVerify">
-							<string key="name">passwordVerify</string>
 							<string key="candidateClassName">NSSecureTextField</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="setup">
