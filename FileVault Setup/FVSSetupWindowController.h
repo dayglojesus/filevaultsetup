@@ -18,7 +18,6 @@
 @property (assign) IBOutlet NSWindow *sheet;
 @property (weak) IBOutlet NSTextField *message;
 @property (weak) IBOutlet NSSecureTextField *password;
-@property (weak) IBOutlet NSSecureTextField *passwordVerify;
 @property (weak) IBOutlet NSProgressIndicator *spinner;
 @property (weak) IBOutlet NSButton *setup;
 @property (weak) IBOutlet NSButton *cancel;

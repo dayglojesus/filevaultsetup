@@ -15,7 +15,6 @@ static float durationOfShake = 0.4f;
 static float vigourOfShake = 0.02f;
 
 @synthesize password = _password;
-@synthesize passwordVerify = _passwordVerify;
 @synthesize spinner = _spinner;
 @synthesize setup = _setup;
 @synthesize cancel = _cancel;
