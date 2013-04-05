@@ -181,11 +181,6 @@ NSString * const FVSStatus = @"FVSStatus";
     [_window close];
 }
 
-- (void)setupDidEndWithOptedOut:(NSAlert *)alert
-{
-    NSLog(@"Remove the checkmark to enable FileVault at next login");
-}
-
 - (void)setupDidEndWithNotRoot:(NSAlert *)alert
 {
     NSLog(@"You must be an administrator to enable FileVault.");
@@ -235,21 +230,14 @@ NSString * const FVSStatus = @"FVSStatus";
     uid_t realuid = getuid();
 
     if (!realuid == 0) {
-        BOOL doNotAskForSetup = [[[NSUserDefaults standardUserDefaults]
-                              objectForKey:FVSDoNotAskForSetup] boolValue];
         NSString *info = @"FileVault will be enabled at your next login.";
-        SEL theSelector = @selector(setupDidEndWithNotRoot:);
         // ALERT
-        if (doNotAskForSetup == YES) {
-            info = @"Remove the checkmark to enable FileVault at next login";
-            theSelector = @selector(setupDidEndWithOptedOut:);
-        }
         NSAlert *alert = [[NSAlert alloc] init];
         [alert setMessageText:@"Requires Logout"];
         [alert setInformativeText:info];
         [alert beginSheetModalForWindow:_window
                           modalDelegate:self
-                         didEndSelector:theSelector
+                         didEndSelector:@selector(setupDidEndWithNotRoot:)
                             contextInfo:nil];
     }
 

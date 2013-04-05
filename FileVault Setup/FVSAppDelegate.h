@@ -25,7 +25,6 @@
 - (void)setupDidEndWithError:(NSAlert *)alert;
 - (void)setupDidEndWithSuccess:(NSAlert *)alert;
 - (void)setupDidEndWithAlreadyEnabled:(NSAlert *)alert;
-- (void)setupDidEndWithOptedOut:(NSAlert *)alert;
 - (void)setupDidEndWithNotRoot:(NSAlert *)alert;
 
 - (void)restart;
