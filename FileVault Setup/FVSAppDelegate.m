@@ -25,11 +25,11 @@
 #include <DiskArbitration/DASession.h>
 
 NSString * const FVSDoNotAskForSetup = @"FVSDoNotAskForSetup";
-NSString * const FVSForceSetup = @"FVSForceSetup";
-NSString * const FVSUsername = @"FVSUsername";
-NSString * const FVSUid = @"FVSUid";
+NSString * const FVSForceSetup       = @"FVSForceSetup";
+NSString * const FVSUsername         = @"FVSUsername";
+NSString * const FVSUid              = @"FVSUid";
 NSString * const FVSLastErrorMessage = @"FVSLastErrorMessage";
-NSString * const FVSStatus = @"FVSStatus";
+NSString * const FVSStatus           = @"FVSStatus";
 
 @implementation FVSAppDelegate
 
