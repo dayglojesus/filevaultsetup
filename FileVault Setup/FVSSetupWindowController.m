@@ -27,8 +27,8 @@ static float vigourOfShake = 0.02f;
     
     int result = seteuid(0);
     if (!result == 0) {
-        NSLog(@"Could not set UID, error: %i", result);
-//        exit(result);
+        // NSLog(@"Could not set UID, error: %i", result);
+        // exit(result);
     }
     
     return self;
