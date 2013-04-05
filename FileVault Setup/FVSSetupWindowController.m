@@ -34,6 +34,9 @@ static float vigourOfShake = 0.02f;
     return self;
 }
 
+// All credit to Matt Long
+// This function was lifted directly from his awesome blog.
+// http://www.cimgf.com/2008/02/27/core-animation-tutorial-window-shake-effect/
 - (CAKeyframeAnimation *)shakeAnimation:(NSRect)frame
 {
     CAKeyframeAnimation *shakeAnimation = [CAKeyframeAnimation animation];
