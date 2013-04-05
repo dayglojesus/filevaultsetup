@@ -10,14 +10,14 @@
 
 @implementation FVSSetupWindowController
 
-static int numberOfShakes = 4;
+static int   numberOfShakes  = 4;
 static float durationOfShake = 0.4f;
-static float vigourOfShake = 0.02f;
+static float vigourOfShake   = 0.02f;
 
 @synthesize password = _password;
-@synthesize spinner = _spinner;
-@synthesize setup = _setup;
-@synthesize cancel = _cancel;
+@synthesize spinner  = _spinner;
+@synthesize setup    = _setup;
+@synthesize cancel   = _cancel;
 
 - (id)init
 {
