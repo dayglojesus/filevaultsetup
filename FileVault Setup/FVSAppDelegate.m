@@ -224,21 +224,7 @@ NSString * const FVSStatus           = @"FVSStatus";
 }
 
 - (IBAction)enable:(id)sender
-{
-    // Is FileVault enabled?
-    BOOL fvstate = [FVSAppDelegate rootVolumeIsEncrypted];
-    
-    if (fvstate == YES) {
-        // ALERT
-        NSAlert *alert = [[NSAlert alloc] init];
-        [alert setMessageText:@"Already Enabled"];
-        [alert setInformativeText:@"FileVault has already been enabled."];
-        [alert beginSheetModalForWindow:_window
-                          modalDelegate:self
-                         didEndSelector:@selector(setupDidEndWithAlreadyEnabled:)
-                            contextInfo:nil];
-    }
-    
+{    
     // Are we running as root?
     uid_t realuid = getuid();
 
@@ -254,7 +240,6 @@ NSString * const FVSStatus           = @"FVSStatus";
                             contextInfo:nil];
     }
 
-    // If both these tests pass...
     [self showSetupSheet:nil];
 }
 
@@ -296,7 +281,22 @@ click the enable button to continue."];
         [_window makeKeyWindow];
         [_window becomeMainWindow];
     }
+    
     [_window center];
+    
+    // Is FileVault enabled?
+    BOOL fvstate = [FVSAppDelegate rootVolumeIsEncrypted];
+    
+    if (fvstate == NO) {
+        // ALERT
+        NSAlert *alert = [[NSAlert alloc] init];
+        [alert setMessageText:@"Already Enabled"];
+        [alert setInformativeText:@"FileVault has already been enabled."];
+        [alert beginSheetModalForWindow:_window
+                          modalDelegate:self
+                         didEndSelector:@selector(setupDidEndWithAlreadyEnabled:)
+                            contextInfo:nil];
+    }
 }
 
 @end
