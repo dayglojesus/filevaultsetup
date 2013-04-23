@@ -60,7 +60,7 @@ FileVault Setup is only used for intial setup and only handles adding a single u
 
 ###Personal Recovery Key
 
-FileVault Setup leverages fdesetup to active FileVault and emits a property list containing the generated Personal Recovery Key to:
+FileVault Setup leverages fdesetup to activate FileVault and emits a property list containing the generated Personal Recovery Key to:
 
     /private/var/root/fdesetup_output.plist
 
