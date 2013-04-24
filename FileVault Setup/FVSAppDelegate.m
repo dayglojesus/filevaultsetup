@@ -287,7 +287,7 @@ click the enable button to continue."];
     // Is FileVault enabled?
     BOOL fvstate = [FVSAppDelegate rootVolumeIsEncrypted];
     
-    if (fvstate == NO) {
+    if (fvstate == YES) {
         // ALERT
         NSAlert *alert = [[NSAlert alloc] init];
         [alert setMessageText:@"Already Enabled"];
