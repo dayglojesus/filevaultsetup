@@ -146,11 +146,17 @@ static float vigourOfShake   = 0.02f;
     // Setup Task args
     NSMutableArray *task_args = [NSMutableArray arrayWithObjects:@"enable",
                                  @"-outputplist", @"-inputplist", nil];
-    if ([[NSFileManager defaultManager]
-         fileExistsAtPath:@"/Library/Keychains/FileVaultMaster.keychain"]) {
-        [task_args insertObject:@"-keychain" atIndex:1];
+    
+    if (![[[NSUserDefaults standardUserDefaults]
+          valueForKeyPath:FVSCreateRecoveryKey] boolValue]) {
+        [task_args insertObject:@"-norecoverykey" atIndex:1];
     }
     
+    if ([[[NSUserDefaults standardUserDefaults]
+          valueForKeyPath:FVSUseKeychain] boolValue]) {
+        [task_args insertObject:@"-keychain" atIndex:1];
+    }
+        
     // Property List Out
     NSString *outputFile = @"/private/var/root/fdesetup_output.plist";
     [[NSFileManager defaultManager] createFileAtPath:outputFile

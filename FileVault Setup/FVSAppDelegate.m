@@ -24,12 +24,13 @@
 #include <IOKit/IOKitLib.h>
 #include <DiskArbitration/DASession.h>
 
-NSString * const FVSDoNotAskForSetup = @"FVSDoNotAskForSetup";
-NSString * const FVSForceSetup       = @"FVSForceSetup";
-NSString * const FVSUsername         = @"FVSUsername";
-NSString * const FVSUid              = @"FVSUid";
-NSString * const FVSLastErrorMessage = @"FVSLastErrorMessage";
-NSString * const FVSStatus           = @"FVSStatus";
+NSString * const FVSDoNotAskForSetup     = @"FVSDoNotAskForSetup";
+NSString * const FVSForceSetup           = @"FVSForceSetup";
+NSString * const FVSRecoveryKeychainOnly = @"FVSRecoveryKeychainOnly";
+NSString * const FVSUsername             = @"FVSUsername";
+NSString * const FVSUid                  = @"FVSUid";
+NSString * const FVSLastErrorMessage     = @"FVSLastErrorMessage";
+NSString * const FVSStatus               = @"FVSStatus";
 
 @implementation FVSAppDelegate
 
@@ -57,6 +58,10 @@ NSString * const FVSStatus           = @"FVSStatus";
                       forKey:FVSDoNotAskForSetup];
     [defaultValues setObject:[NSNumber numberWithBool:NO]
                       forKey:FVSForceSetup];
+    [defaultValues setObject:[NSNumber numberWithBool:YES]
+                      forKey:FVSUseKeychain];
+    [defaultValues setObject:[NSNumber numberWithBool:YES]
+                      forKey:FVSCreateRecoveryKey];
     [defaultValues setObject:username
                       forKey:FVSUsername];
     [defaultValues setObject:[NSNumber numberWithInt:uid]
