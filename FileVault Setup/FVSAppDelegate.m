@@ -26,7 +26,8 @@
 
 NSString * const FVSDoNotAskForSetup     = @"FVSDoNotAskForSetup";
 NSString * const FVSForceSetup           = @"FVSForceSetup";
-NSString * const FVSRecoveryKeychainOnly = @"FVSRecoveryKeychainOnly";
+NSString * const FVSUseKeychain          = @"FVSUseKeychain";
+NSString * const FVSCreateRecoveryKey    = @"FVSCreateRecoveryKey";
 NSString * const FVSUsername             = @"FVSUsername";
 NSString * const FVSUid                  = @"FVSUid";
 NSString * const FVSLastErrorMessage     = @"FVSLastErrorMessage";
