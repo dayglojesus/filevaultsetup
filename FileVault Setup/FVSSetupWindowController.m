@@ -199,7 +199,7 @@ static float vigourOfShake   = 0.02f;
                                      readDataToEndOfFile]
                        encoding:NSUTF8StringEncoding];
     
-    // if the last char or error is a newline, remove it
+    // If the last char of error is a newline, remove it
     if ([error characterAtIndex:[error length] -1] == NSNewlineCharacter) {
         error = [error substringToIndex:[error length] -1];
     }
@@ -209,11 +209,8 @@ static float vigourOfShake   = 0.02f;
     
     // Close
     int result = [theTask terminationStatus];
-
-    [[NSUserDefaults standardUserDefaults]
-        setObject:error
-           forKey:FVSLastErrorMessage];
-    
+    [self setSetupError:error];
+     
     [NSApp endSheet:[self window] returnCode:result];
 }
 

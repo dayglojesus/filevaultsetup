@@ -30,8 +30,6 @@ NSString * const FVSUseKeychain          = @"FVSUseKeychain";
 NSString * const FVSCreateRecoveryKey    = @"FVSCreateRecoveryKey";
 NSString * const FVSUsername             = @"FVSUsername";
 NSString * const FVSUid                  = @"FVSUid";
-NSString * const FVSLastErrorMessage     = @"FVSLastErrorMessage";
-NSString * const FVSStatus               = @"FVSStatus";
 
 @implementation FVSAppDelegate
 
@@ -67,8 +65,6 @@ NSString * const FVSStatus               = @"FVSStatus";
                       forKey:FVSUsername];
     [defaultValues setObject:[NSNumber numberWithInt:uid]
                       forKey:FVSUid];
-    [defaultValues setObject:@""
-                      forKey:FVSLastErrorMessage];
     
     [[NSUserDefaults standardUserDefaults] registerDefaults:defaultValues];
     
@@ -141,13 +137,12 @@ NSString * const FVSStatus               = @"FVSStatus";
 
 - (IBAction)didEndSetupSheet:(id)sender returnCode:(int)result
 {
+    // Error
+    NSString *error = [setupController setupError];
+
     [NSApp endSheet:[setupController window]];
     [[setupController window] orderOut:sender];
     setupController = nil;
-    
-    // Error
-    NSString *error = [[NSUserDefaults standardUserDefaults]
-                       valueForKeyPath:FVSLastErrorMessage];
     
     // Basic Alert
     NSAlert *alert = [[NSAlert alloc] init];
