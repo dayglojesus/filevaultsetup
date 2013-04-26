@@ -114,13 +114,18 @@ static float vigourOfShake   = 0.02f;
                                (__bridge CFStringRef)(name),
                                NULL,
                                NULL);
+        
+        if (rec) {
+            match = ODRecordVerifyPassword(rec,
+                                           (__bridge CFStringRef)(password),
+                                           NULL);
+            CFRelease(rec);
+        }
+        
+        CFRelease(node);
     }
-    if (rec) {
-        match = ODRecordVerifyPassword(rec,
-                                       (__bridge CFStringRef)(password),
-                                       NULL);
-    }
-    
+
+    CFRelease(session);
     return match;
 }
 
