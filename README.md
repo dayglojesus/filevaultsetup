@@ -2,6 +2,8 @@
 
 A simple interface for using fdesetup at login time. Supports a single user setup with an FMVI.
 
+![screenshot](https://bintray.com/blob/dayglojesus/github/filevaultsetup/da5e4790c840608d1867bc54401901d69bf5fad4/filevaultsetup.png)
+
 ##Requirements
 
 Only runs on Mac OS X 10.8.0 or greater
