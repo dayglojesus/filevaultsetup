@@ -2,6 +2,8 @@
 
 A simple interface for using fdesetup at login time. Supports a single user setup with an FMVI.
 
+In the interest of clarity, this is not a key escrow utility. It is only meant to assist your users in setting up FileVault.
+
 ![screenshot](https://bintray.com/blob/dayglojesus/github/filevaultsetup/da5e4790c840608d1867bc54401901d69bf5fad4/filevaultsetup.png)
 
 ##Requirements
