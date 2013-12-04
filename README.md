@@ -98,6 +98,8 @@ Or setting the preference...
 
 By default, the app will try and use /Library/Keychains/FileVaultMaster.keychain when activating FileVault.
 
+[Read more about creating and using a FileVaultMaster.keychain ...](http://support.apple.com/kb/ht5077)
+
 If you do not wish to use an Institutional Recovery key, you must suppress this behaviour.
 
     /Applications/FileVault\ Setup.app/Contents/MacOS/FileVault\ Setup -FVSUseKeychain NO
