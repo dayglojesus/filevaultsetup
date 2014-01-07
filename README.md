@@ -32,7 +32,7 @@ Use Mac OS X 10.8 and Xcode (4.6 recommended) to build the app.
 
 You can also download the pre-compiled app here...
 
-[DOWNLOAD](http://dl.bintray.com/content/dayglojesus/github/filevaultsetup-1.0.2.dmg?direct)
+[DOWNLOAD](http://dl.bintray.com/content/dayglojesus/github/filevaultsetup-1.0.3.dmg?direct)
 
 ##Installation
 
