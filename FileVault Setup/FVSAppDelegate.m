@@ -110,8 +110,8 @@ NSString * const FVSUid                  = @"FVSUid";
     
     BOOL state = NO;
     if (isEncrypted) {
+        state = CFBooleanGetValue(isEncrypted) ? YES : NO;
         CFRelease(isEncrypted);
-        state = YES;
     }
     
     CFRelease(disk);
